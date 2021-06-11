@@ -1,0 +1,953 @@
+---
+title: "R Tutorial"
+output: 
+  html_notebook:
+    toc: true
+---
+# Utilities
+## Clear variables
+### Clear single variable
+```{r}
+var <- 20
+rm( var )
+```
+### Clear environment
+```{r}
+rm( list = ls() )
+```
+## Restart R
+Session -> Restart R
+
+## Current Working Directory
+### Get Working Directory
+```{r}
+cat( getwd() )
+```
+### Set Working Directory
+```{r}
+setwd( "/Users/filippo/Documents/University/courses/BI/R_tutorial" )
+```
+### Files and directories in Current Directory
+```{r}
+cat( "List of files: \n", list.files(), "\n\n" )
+cat( "List of directories: \n", list.dirs() )
+```
+# Data types
+## Numeric
+```{r}
+cat( "num: ", 3, "\nclass( 3 ): ", class( 3 ) )
+```
+## Integer
+```{r}
+cat( "int: ", 3L, "\nclass( 3L ): ", class( 3L ) )
+```
+## Boolean
+```{r}
+cat( "bool: ", TRUE, "\nclass( TRUE ): ", class( TRUE ) )
+```
+## Characters
+```{r}
+cat( "char: ", "Hello", "\nclass( \"Hello\" ): ", class( "Hello" ) )
+```
+
+# Variables
+## Simple assignment operation
+```{r}
+a <- 2
+# a = 2
+# assign( "a", 2 )
+cat( "a: ", a, "\n" ) 
+```
+## Operations on variables
+```{r}
+b <- a * 3
+# b <- a / 2
+# b <- a + a
+# b <- a - 4
+cat( "b: ", b )
+```
+## Floating point variables
+```{r}
+f <- b * 3.14
+# f <- 18.84
+cat( "f: ", f )
+```
+
+# Vectors
+## Vector initialization via `c()` function
+```{r}
+v_int <- c( 1, 2, 3, 4 )
+cat( "v_int: ", v_int )
+```
+## Vector of floats via vector operations
+```{r}
+v_float <- v_int * 3.14
+# v_float <- v_int / 2.
+# v_float <- v_int - 1.0001
+# v_float <- v_int * f
+# v_float <- c( 3.14, 3.14 * 2, 3.14 * 3 )
+cat( "v_float: ", v_float )
+```
+## Reciprocal of a vector
+```{r}
+v_recipr <- 1 / v_int
+cat( "v_recipr: ", v_recipr )
+```
+## Concatenation of vectors and constants
+```{r}
+v_concat <- c( v_recipr, 0, v_int )
+cat( "v_concat: ", v_concat )
+```
+## Sequence generation
+```{r}
+v_seq1 <- seq( 1, 9 )
+cat( "v_seq1: ", v_seq1 )
+```
+```{r}
+v_seq2 <- seq( 1, 9, by = 2 )
+cat( "v_seq2: ", v_seq2 )
+```
+```{r}
+v_seq3 <- seq( -10, 10, by = 2 )
+cat( "v_seq3: ", v_seq3 )
+```
+```{r}
+v_seq4 <- seq( -2, 2, by = .5 )
+cat( "v_seq4: ", v_seq4 )
+```
+## Repeat vectors
+```{r}
+v_rep1 <- rep( v_int, times = 2 )
+cat( "v_rep1: ", v_rep1 )
+```
+```{r}
+v_rep2 <- rep( v_int, each = 4 )
+cat( "v_rep2: ", v_rep2 )
+```
+## Element-wise operations between vectors of same length
+```{r}
+v1 <- c( 1, 2, 3 )
+cat( "v1: ", v1 )
+```
+```{r}
+v2 <- c( 4, 5, 6 )
+cat( "v2: ", v2 )
+```
+```{r}
+v_sum <- v1 + v2
+cat( "v_sum: ", v_sum )
+```
+```{r}
+v_diff <- v2 - v1
+cat( "v_diff: ", v_diff )
+```
+```{r}
+v_mul <- v2 * v1
+cat( "v_mul: ", v_mul )
+```
+```{r}
+v_div <- v2 / v1
+cat( "v_div: ", v_div )
+```
+## Element-wise operations between vectors of different lengths
+
+> Note that the two vectors should have lengths which are one the multiple of the other
+
+```{r}
+v3 <- c( 4, 5, 6, 7, 8, 9 )
+cat( "v3: ", v3 )
+```
+It is like considering:
+```{r}
+# v1 = 1, 2, 3, 1, 2, 3
+# v3 = 4, 5, 6, 7, 8, 9
+```
+The shortest vector is "repeated" as many times is needed in order to reach the longest length
+```{r}
+v_sum_diff_length <- v1 + v3
+cat( "v_sum_diff_length: ", v_sum_diff_length )
+```
+```{r}
+v_diff_diff_length <- v3 - v1
+cat( "v_diff_diff_length: ", v_diff_diff_length )
+```
+```{r}
+v_mul_diff_length <- v3 * v1
+cat( "v_mul_diff_length: ", v_mul_diff_length )
+```
+```{r}
+v_div_diff_length <- v3 / v1
+cat( "v_div_diff_length: ", v_div_diff_length )
+```
+## Length of a vector
+```{r}
+l_v1 <- length( v1 )
+cat( "length( v1 ): ", l_v1 )
+```
+```{r}
+l_v2 <- length( v2 )
+cat( "length( v1 ): ", l_v2 )
+```
+```{r}
+l_v3 <- length( v3 )
+cat( "length( v1 ): ", l_v3 )
+```
+## Range operator
+```{r}
+r_v1 <- range( v1 )
+cat( "range( v1 ): ", r_v1 )
+```
+```{r}
+r_v2 <- range( v2 )
+cat( "range( v2 ): ", r_v2 )
+```
+```{r}
+r_v3 <- range( v3 )
+cat( "range( v3 ): ", r_v3 )
+```
+## Min and Max operators
+```{r}
+min_v1 <- min( v1 )
+cat( "min( v1 ): ", min_v1 )
+```
+```{r}
+max_v1 <- max( v1 )
+cat( "max( v1 ): ", max_v1 )
+```
+## Accessing vector elements
+```{r}
+first_element_v1 <- v1[ 1 ]
+cat( "v1[ 1 ]: ", first_element_v1 )
+```
+## Sort vectors
+```{r}
+v_unsrt <- c( 9, -23, 1, 3.14, 100, -598.121 )
+cat( "v_unsrt: ", v_unsrt )
+```
+```{r}
+v_srt_asc <- sort( v_unsrt )
+cat( "v_srt_asc: ", v_srt_asc )
+```
+```{r}
+v_srt_desc <- sort( v_unsrt, decreasing = TRUE )
+cat( "v_srt_desc: ", v_srt_desc )
+```
+# Useful operators
+## Modulo operator
+```{r}
+rest <- 10 %% 4
+cat( "rest: ", rest )
+```
+## Square root
+```{r}
+square_root <- sqrt( 4 )
+cat( "square_root: ", square_root )
+```
+## Exponential operator
+```{r}
+exponential <- 10 ** 4
+# e ^ 2 <- exp( 2 )
+cat( "exponential: ", exponential )
+```
+
+# Other data structures
+## Lists
+Vectors contain elements which are all of the same type, lists can contain elements of different types.
+```{r}
+l <- list( c( 1, 2, 3 ), "Hello", FALSE, sin )
+l
+```
+## Matrices
+2D data structure.
+```{r}
+m1 <- matrix( c( 1, 2, 3, 4, 5, 6 ), nrow = 2 )
+m1
+```
+```{r}
+m2 <- matrix( c( 1, 2, 3, 4, 5, 6 ), nrow = 2, byrow = TRUE )
+m2
+```
+```{r}
+m3 <- matrix( c( 1, 2, 3, 4, 5, 6 ), nrow = 2, ncol = 9 )
+m3
+```
+## Factors
+Encodes a vector as a factor, i.e. a category or enumerated type (levels).
+```{r}
+province <- c( "Siena", "Firenze", "Pisa", "Firenze", "Siena", "Lucca", "Siena" )
+fact <- factor( province )
+print( fact )
+cat( "nlevels( fact ): ", nlevels( fact ) )
+cat( "\nlevels( fact ): ", levels( fact ) )
+```
+## Dataframes
+Tabularized data, different from matrices which can only stores elements of the same type.
+```{r}
+df <- data.frame( students_names = c( "Filippo", "Mary", "Pierre" ), 
+                  ages = c( 25, 22, 27 ), 
+                  passed = c( TRUE, TRUE, FALSE ) )
+print( df )
+class( df )
+```
+```{r}
+cat( "df$students_names: ", df$students_names )
+cat( "\ndf$ages: ", df$ages )
+cat( "\ndf$passed: ", df$passed )
+```
+```{r}
+cat( "df[,1]: ", df[,1] )
+cat( "\ndf[,2]: ", df[,2] )
+cat( "\ndf[,3]: ", df[,3] )
+```
+```{r}
+df[1,1]
+df[,2:3]
+df[1:2,]
+df[3,]
+```
+
+# Functions
+## Function definition
+```{r}
+decimal_scaling <- function( vec )
+{
+  h <- ceiling( log10( max( abs( vec ) ) ) )
+  return( vec / ( 10 ^ h ) )
+}
+
+min_max <- function( vec, new_min = 0, new_max = 1 )
+{
+  coefficient <- ( new_max - new_min ) / ( max( vec ) - min( vec ) )
+  return( coefficient * ( vec - min( vec ) ) + new_min )
+}
+
+z_index <- function( vec )
+{
+  return( ( vec - mean( vec ) ) / sd( vec ) )
+}
+```
+## Function call
+```{r}
+ds <- decimal_scaling( c( -976, 800, 390, 100 ) )
+cat( "decimal_scaling: ", ds )
+```
+```{r}
+mm_01 <- min_max( c( -976, 800, 390, 100 ) )
+cat( "min_max in [0,1]: ", mm_01 )
+```
+```{r}
+mm_11 <- min_max( c( -976, 800, 390, 100 ), new_min = -1, new_max = 1 )
+cat( "min_max in [-1,1]: ", mm_11 )
+```
+```{r}
+zi <- z_index( c( -976, 800, 390, 100 ) )
+cat( "z-index: ", zi )
+```
+
+# Datasets
+## Read `.csv` files
+```{r}
+# read data from local .csv file
+# df = read.csv( filename )
+```
+## Load built-in datasets
+```{r}
+# import the built-in datasets
+library( datasets )
+
+# show first rows
+head( iris )
+```
+## Number of rows and columns
+```{r}
+nrow( iris )
+ncol( iris )
+```
+## Missing values
+```{r}
+iris_missing <- iris
+# check for missing values
+print( all( complete.cases( iris_missing ) ) )
+
+# modify the dataset so that it contains a missing 
+iris_missing[ 5, 3 ] = NaN
+head( iris_missing )
+
+# check for missing values
+print( all( complete.cases( iris_missing ) ) )
+```
+## Data elimination: elimination of the rows containing missing data
+```{r}
+iris_elimination <- iris_missing[ complete.cases( iris_missing), ]
+print( nrow( iris_missing ) )
+print( nrow( iris_elimination ) )
+```
+## Data imputation
+### Mean data imputation
+```{r}
+iris_mean_imputation <- iris_missing
+for ( j in 1:ncol( iris_mean_imputation) )
+{
+  iris_mean_imputation[ is.na( iris_mean_imputation[ , j ] ), j ] <- mean( iris_mean_imputation[ , j ], na.rm = TRUE )
+}
+head( iris_mean_imputation )
+```
+
+# Plots
+## Bar plots
+```{r}
+library( RColorBrewer )
+
+cars <- mtcars
+cars$carb
+# table of counts
+carb.count <- table( cars$carb )
+carb.count
+# count barplot
+barplot( carb.count, 
+         main = "Carburators count",  
+         xlab = "Number of carburators",
+         ylab = "Count" )
+# ordered count barplot
+barplot( carb.count[ order( carb.count, decreasing = TRUE ) ], 
+         main = "Carburators count, ordered",
+         xlab = "Number of carburators",
+         ylab = "Count" )
+# table of frequencies
+carb.freq <- prop.table( carb.count )
+carb.freq
+# frequencies barplot
+barplot( carb.freq[ order( carb.freq, decreasing = TRUE ) ],
+         main = "Carburators frequencies",
+         xlab = "Frequencies",
+         ylab = "Number of carburators",
+         col = brewer.pal( 6, "Pastel1" ),
+         legend.text = TRUE,
+         horiz = TRUE )
+```
+
+## Pie charts
+```{r}
+pie( carb.freq,
+     main = "Pie chart of carburators",
+     col = brewer.pal( 6, "Pastel1" ))
+```
+## Histograms
+```{r}
+# create a vector of ages
+age <- c( 26, 47, 58, 25, 60 )
+# create a vector of names
+name <- c( "Mary", "Paul", "John", "Sarah", "Martin" )
+
+# column bind two vectors
+age_name <- cbind( age, name )
+age_name
+
+# mean( age_name[ , 1 ] )   # returns NA since argument is not numeric
+mean( as.numeric( age_name[ , 1 ] ) )
+
+# build the histogram of counts
+hist( as.numeric( age_name[ , 1 ] ), 
+      main = "Histogram of frequencies (counts)",
+      xlab = "Age")
+
+# build the histogram of densities
+hist( as.numeric( age_name[ , 1 ] ), 
+      main = "Histogram of densities",
+      xlab = "Age",
+      freq = FALSE )
+
+# build the histogram of densities, with breaks = 5
+hist( as.numeric( age_name[ , 1 ] ), 
+      main = "Histogram of densities",
+      xlab = "Age",
+      breaks = 5,
+      freq = FALSE )
+
+# build the histogram of densities, partitioned per width
+hist( as.numeric( age_name[ , 1 ] ), 
+      main = "Histogram of densities",
+      xlab = "Age",
+      breaks = c( 25, 32, 39, 46, 53, 60 ),
+      freq = FALSE,
+      col = brewer.pal(6, "Pastel1" ) )
+```
+## Boxplots
+```{r}
+boxplot( iris$Sepal.Length, main = "Box plot Sepal Length Iris", ylab = "Sepal Lenght", xlab = "Iris" )
+```
+
+# PCA
+## Computation
+```{r}
+mtcars.pca <- princomp( mtcars, cor = FALSE )
+```
+## Summary
+```{r}
+summary( mtcars.pca )
+```
+## Loadings
+```{r}
+loadings( mtcars.pca )
+```
+## Screen plot
+```{r}
+plot( mtcars.pca )
+```
+## Autoplot
+```{r}
+library( ggfortify )
+mtcars$carb
+mtcars$carb <- as.factor( mtcars$carb )
+mtcars$carb
+
+autoplot( mtcars.pca, data = mtcars, colour = "carb" )
+autoplot( princomp( iris[ c( 1, 2, 3, 4 ) ] ), data = iris, label = FALSE, colour = "Species" )
+autoplot( princomp( iris[ c( 1, 2, 3, 4 ) ] ), data = iris, label = TRUE, colour = "Species" )
+```
+# Statistical measures
+## Mode
+```{r}
+get_mode <- function( values_vector )
+{
+  uniqv <- unique( values_vector )
+  return ( uniqv[ which.max( tabulate( match( values_vector, uniqv ) ) ) ] )
+}
+
+get_mode( c(0,0,1,1,1,1,1,2,2,3,3,3,3,3,3,3,3 ) )
+```
+## Quantiles
+```{r}
+quantile( iris$Sepal.Length )
+# The 0% quantile is the minimum
+min( iris$Sepal.Length )
+# The 50% quantile is the median
+median( iris$Sepal.Length )
+# The 100% quantile is the maximum
+max( iris$Sepal.Length )
+```
+```{r}
+# with probs one can change the steps of the quantile
+quantile( iris$Sepal.Length, probs = seq( 0, 1, 0.1 ) )
+```
+## Gini Heterogeneity Index
+```{r}
+HetGini <- function( vec, relative = FALSE )
+{
+  vec.table <- table( vec )
+  vec.freq <- prop.table( vec.table )
+  squared_vector <- c()
+  for( i in 1:nrow( vec.freq ) ) 
+  {
+    squared_vector <- cbind( squared_vector, vec.freq[ i ]^2 )
+  }
+  if( !relative )
+  {
+    return( 1 - sum( squared_vector ) )
+  }
+  else
+  {
+    if( nrow( vec.freq ) == 1 )
+    {
+      max_value = 1    
+    }
+    else
+    {
+      max_value = ( nrow( vec.freq ) - 1 ) / ( nrow( vec.freq ) )
+    }
+    return( ( 1 - sum( squared_vector ) ) / max_value )
+  }
+}
+
+vec_gini0 <- c( "Siena", "Siena", "Siena", "Siena", "Siena", "Siena", "Siena" )
+HetGini( vec_gini0 )
+HetGini( vec_gini0, relative = TRUE )
+
+vec_gini1 <- c( "Siena", "Firenze", "Pisa", "Siena", "Siena", "Siena", "Siena", "Siena", "Siena" )
+HetGini( vec_gini1 )
+HetGini( vec_gini1, relative = TRUE )
+
+vec_gini2 <- c( "Siena", "Firenze", "Pisa" )
+HetGini( vec_gini2 )
+HetGini( vec_gini2, relative = TRUE )
+```
+## Skewness and kurtosis
+```{r}
+library( e1071 )
+skewness( iris$Sepal.Length )
+kurtosis( iris$Sepal.Length )
+```
+## Correlation matrices and plots
+```{r}
+library( corrplot )
+# correlation matrix take only numerical values
+
+# cor() exploits pearson correlation coefficient by default
+corr_matrix <- cor( iris[ , 1:4 ], method = "pearson" )
+corr_matrix
+corrplot( corr_matrix, method = "circle" )
+corrplot( corr_matrix, method = "ellipse" )
+corrplot( corr_matrix, method = "number" )
+corrplot( corr_matrix, method = "color" )
+```
+## Multi scatter plots
+```{r}
+plot( iris[ , 1:4 ] )
+```
+## Star plots
+```{r}
+stars( iris[ , 1:4 ] )
+```
+## Quantile-Quantile plots
+```{r}
+qqnorm( iris$Sepal.Width )
+qqplot( iris$Sepal.Length, iris$Sepal.Width )
+```
+## Box plots wrt class
+```{r}
+boxplot( Sepal.Width ~ Species, data = iris, col = brewer.pal( 6, "Pastel1" ) )
+```
+## Contingency table
+```{r}
+contingency_table <- table( iris$Species, iris$Sepal.Length )
+contingency_table
+```
+
+# Linear Regression
+## Simple Linear Regression
+```{r}
+iris.reg <- lm( iris$Sepal.Length ~ iris$Sepal.Width ) 
+summary( iris.reg )
+```
+## Scatter plot of the residual against the fitted values
+```{r}
+plot( iris.reg )
+```
+
+
+# Logistic regression
+## Model
+```{r}
+log_regr <- glm( mtcars$vs ~ ., data = mtcars, family = binomial( link = "logit" ) )
+log_regr
+```
+## Coefficients
+```{r}
+coef( log_regr )
+```
+
+
+# Training and test sets
+## Splitting
+```{r}
+library( caTools )
+
+set.seed( 10 )
+sample <- sample.split( mtcars$vs, SplitRatio = .75 )
+sample
+# select only the rows set as TRUE
+train <- mtcars[ sample, ]
+# or
+train <- subset( mtcars, sample == TRUE )
+train
+
+# select only the rows set as FALSE
+test <- mtcars[ !sample, ]
+# or
+test <- subset( mtcars, sample == FALSE )
+test
+```
+## Training
+> **Worth noting**: it may happen that in the test set, depending on the splitting, some categorical variables may present values which do not appear in the training set or viceversa. The seed in used to randomly split the dataset plays a crucial role in this behaviour.
+
+```{r}
+log_regr.split <- glm( train$vs ~ ., data = train, family = binomial( link = "logit" ) )
+log_regr.split
+```
+## Prediction
+```{r}
+log_regr.predictions <- predict( log_regr.split, newdata = test, type = "response" )
+log_regr.predictions
+
+threshold <- .5
+log_regr.threshold <- ifelse( log_regr.predictions > threshold, 1, 0 )
+log_regr.threshold
+```
+
+## Confusion matrix and performance measures
+```{r}
+library( caret )
+confusionMatrix( as.factor( log_regr.threshold ), reference = as.factor( test$vs ) )
+
+library( ROCR )
+library( Metrics )
+
+predictions <- prediction( log_regr.predictions, test$vs )
+predictions
+
+perf <- performance( predictions, measure = "tpr", x.measure = "fpr" )
+plot( perf )
+
+auc( test$vs, log_regr.threshold )
+```
+
+# Classification trees
+```{r}
+library( ISLR )
+head( Carseats )
+```
+## Dataset preparation
+Assume we want to predict the variable `sales` and that we want to create a categorical variable out of this, which describes whether the sale is high or not. In our example "high" means greater than 8.
+```{r}
+High <- as.factor( ifelse( Carseats$Sales <= 8, "No", "Yes" ) )
+High
+# Add the column to the dataset 
+carseats <- data.frame( Carseats, High )
+head( carseats )
+```
+> **Be careful**: the newly created categorical (binary) variable must be saved as a factor to be correctly processed by the classification tree. If it is saved as character it will not be processed in the correct way.
+Let's suppose we want to build a classification tree to predict the variable `High` exploiting all the other variables except for the `Sales` one - which already contains correlated information.
+
+## Training and plotting
+```{r}
+library( tree )
+
+# remove sales from carseats
+carseats <- carseats[ -c( 1 ) ]
+
+tree.carseats <- tree( High~., data = carseats )
+summary( tree.carseats )
+plot( tree.carseats )
+text( tree.carseats, pretty = 0, cex = .5 )
+```
+## Pruning
+```{r}
+prune.carseats <- prune.misclass( tree.carseats, best = 12 )
+plot( prune.carseats )
+text( prune.carseats, pretty = 0, cex = .5 )
+```
+## Complete model construction and comparisons of performances
+```{r}
+# get the idx of the training samples
+train_idx <- sample( 1:nrow( carseats ), 250 )
+# build the tree on the training samples
+tree.carseats_train <- tree( High~., data = carseats, subset = train_idx )
+# predict on the test set
+tree.predictions_whole <- predict( tree.carseats_train, carseats[ -train_idx, ], type = 'class' )
+tree.predictions_whole
+# misclassification table
+with( carseats[ -train_idx, ], table( tree.predictions_whole, High ) )
+
+# prune tree
+prune.carseats_train <- prune.misclass( tree.carseats_train, best = 12 )
+# predict on the test set
+tree.predictions_prune <- predict( prune.carseats_train, carseats[ -train_idx, ], type = 'class' )
+tree.predictions_prune
+# misclassification table
+with( carseats[ -train_idx, ], table( tree.predictions_prune, High ) )
+```
+## Random Forests
+```{r}
+library( MASS )
+library( randomForest )
+
+# import dataset
+boston <- Boston
+dim( boston )
+names( boston )
+
+# creating training and testing
+set.seed( 101 )
+train <- sample( 1:nrow( boston ), 300 )
+
+# model
+rf.boston <- randomForest( medv~., data = boston, subset = train )
+rf.boston
+```
+
+
+# Bayesian methods
+## Näive Bayes classifier
+```{r}
+library( e1071 )
+library( MASS )
+# dataset
+titanic <- as.data.frame( Titanic )
+titanic
+
+# split in training and test set
+samples <- sample( 1:nrow( titanic ), 20 )
+titanic.train <- titanic[ samples, ]
+titanic.test <- titanic[ -samples, ]
+
+# predict survived variable via Näive Bayes
+titanic.nb <- naiveBayes( Survived~., data = titanic.train )
+titanic.predicted <- predict( titanic.nb, newdata = titanic.test )
+table(titanic.predicted, titanic.test$Survived )
+```
+## Bayesian Networks
+```{r}
+library( bnlearn )
+
+# import dataset
+cor_df <- data.frame( coronary )
+# hc function: fits a bayesian network to the dataset
+res <- hc( cor_df )
+plot( res )
+res$arcs
+```
+If one wants to remove some connections between variables, it is possible by modifying the `arcs` feature. 
+```{r}
+remove_idx <- which( res$arcs[ , 'from' ] == "M..Work" & res$arcs[ , 'to' ] == "Proteins" )
+res$arcs <- res$arcs[ -remove_idx, ]
+plot( res )
+```
+After learning the structure, we need to find out the conditional probability tables (CPTs) at each node. The `bn.fit` function fits, assigns or replaces the parameters of a Bayesian network conditional on its structure.
+```{r}
+fitted_bn <- bn.fit( res, data = cor_df )
+print( fitted_bn$Proteins )
+```
+What is the chance of having a protein less than 3, given that smoke is equal to "no"?
+```{r}
+cpquery( fitted_bn, event = ( Proteins == "<3" ), evidence = ( Smoking == "no" ) )
+```
+
+
+# Clustering
+## Partitioning clustering
+### K-means
+```{r}
+# remove the species column
+iris.noSpecies <- iris[, -5 ]
+iris.kmeans <- kmeans( iris.noSpecies, 3 )
+iris.kmeans
+# plot
+par( mfrow = c( 2, 2 ), mar = c( 2.5, 2.5, 2, 1 ) )
+plot( iris[ c( 1, 2 ) ], col = iris.kmeans$cluster, main = "K-Means clusters" )
+plot( iris[ c( 1, 2 ) ], col = iris$Species, main = "Real Species clusters" )
+plot( iris[ c( 3, 4 ) ], col = iris.kmeans$cluster, main = "K-Means clusters" )
+plot( iris[ c( 3, 4 ) ], col = iris$Species, main = "Real Species clusters" )
+#confusion matrix
+table( iris$Species, iris.kmeans$cluster )
+```
+
+### K-medoids (or PAM)
+```{r}
+library( cluster )
+library( factoextra ) 
+
+head( USArrests )
+df <- scale( USArrests )
+head( df )
+
+# apply k-medoids with k = 2 clusters
+df.kmedoids <- pam( df, k = 2, metric = "euclidean" )
+df.kmedoids
+
+# visualize the clusters with factoextra
+fviz_cluster( df.kmedoids )
+```
+
+## Hierarchical clustering
+### Agglomerative
+```{r}
+library( cluster )
+library( factoextra )
+
+df <- scale( USArrests )
+```
+#### hclust
+```{r}
+# compute the distance between the observations of a dataframe
+distance.matrix <- dist( df, method = "euclidean" )
+
+# hclust approach
+aggl.clust.hclust <- hclust( distance.matrix, method = "complete" )
+plot( aggl.clust.hclust, cex = 0.6, hang = -1 )
+```
+#### agnes
+```{r}
+# agnes approach
+aggl.clust.agnes <- agnes( df, metric = "euclidean", method = "complete" )
+pltree( aggl.clust.agnes )
+
+# measure of goodness
+aggl.clust.agnes$ac
+
+# perform the clustering with different methods and evaluate the results
+methods <- c( "average", "single", "complete", "ward" )
+for( m in methods )
+{
+  print( paste( m, ":", agnes( df, method = m, metric = "euclidean")$ac ) )
+}
+```
+
+### Divisive
+#### diana
+```{r}
+div.clust.diana <- diana( df )
+pltree( div.clust.diana )
+
+# measure of goodness
+div.clust.diana$dc
+```
+
+### Cut the tree
+```{r}
+hc <- hclust( distance.matrix, method = "ward.D" )
+plot( hc )
+
+# cut into 4 groups
+sub_grp <- cutree( hc, k = 4 )
+table( sub_grp )
+rect.hclust( hc, k = 8, border = 2:5)
+```
+### Silhouette values and plot
+```{r}
+sil <- silhouette( cutree( hc, h = 7 ), 
+                   as.dist( distance.matrix )
+                 )
+plot( sil, main = "Silhouette" )
+```
+
+### Comparing dendograms
+```{r}
+library( dendextend )
+
+hc1 <- hclust( distance.matrix, method = "complete" )
+hc2 <- hclust( distance.matrix, method = "ward.D2" )
+
+dend1 <- as.dendrogram( hc1 )
+dend2 <- as.dendrogram( hc2 )
+
+tanglegram( dend1, dend2 )
+```
+
+# Neural Networks
+```{r}
+library( neuralnet )
+
+# creating training data set
+x1 <- c( 20, 10, 30, 20, 80, 30 )
+x2 <- c( 90, 20, 40, 50, 50, 80 )
+y <- c( 1, 0, 0, 0, 1, 1 )
+df <- data.frame( x1, x2, y )
+
+# fit neural network
+nn = neuralnet( y ~ x1 + x2, data = df, hidden = 3, act.fct = "logistic", linear.output = FALSE )
+
+# creating test set
+x1_test <- c( 30, 40, 85 )
+x2_test <- c( 85, 50, 40 )
+df.test <- data.frame( x1_test, x2_test )
+
+# predict outputs
+prd <- compute( nn, df.test )
+print( prd$net.result )
+
+# threshold
+prob <- prd$net.result
+pred <- ifelse( prob > .5, 1, 0 )
+pred
+```
+
